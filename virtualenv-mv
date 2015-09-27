@@ -1,0 +1,105 @@
+#!/bin/bash
+#
+# Move (rename) Python virtualenv directories
+
+
+create_backup(){
+    BACKUP_PATH=$SOURCE_PATH.$(tr -dc 0-9 < /dev/urandom | head -c6)
+    cp -a "$SOURCE_PATH" "$BACKUP_PATH"
+}
+
+
+do_mv(){
+    (
+
+    DEST_PATH=$(realpath "$2")
+    SOURCE_PATH=$(realpath "$1")
+
+    create_backup
+
+    # move directory
+    DEST_PATH=$(mv -v "$SOURCE_PATH" "$DEST_PATH" | awk -F[‘’] '{print $(NF-1)}')
+
+    # ensure move was successful
+    is_virtualenv "$DEST_PATH" || {
+        fatal "failed to move ‘$SOURCE_PATH’ to ‘$DEST_PATH’"
+    }
+
+    (
+        cd "$DEST_PATH" || {
+            fatal "unable to cd into ‘$DEST_PATH’"
+        }
+
+        # generate list of files to search
+        readarray -t filelist < <(find bin/ -type f
+                                  find lib/ -type f -name RECORD)
+
+        # find and replace old virtualenv path with new
+        rgrep --files-with-matches --null "$SOURCE_PATH" "${filelist[@]}" \
+            | xargs -0I% -- sed -i "s:$SOURCE_PATH:$PWD:g" %
+    )
+
+    remove_backup
+
+    )
+}
+
+
+fatal(){
+    echo "$PROGRAM: $1" >&2
+    restore_backup
+    exit 1
+}
+
+
+fatal_info(){
+    echo "$PROGRAM: $1" >&2
+    echo "Try '$PROGRAM --help' for more information." >&2
+    exit 1
+}
+
+
+is_virtualenv(){
+    [[ -d $1 && -f $1/bin/activate ]]
+}
+
+
+remove_backup(){
+    if [[ -d $BACKUP_PATH ]]; then
+        rm -rf "$BACKUP_PATH"
+    fi
+}
+
+
+restore_backup(){
+    if [[ -d $BACKUP_PATH ]]; then
+        rm -rf "$DEST_PATH"
+        rm -rf "$SOURCE_PATH" &>/dev/null
+        mv "$BACKUP_PATH" "$SOURCE_PATH"
+    fi
+}
+
+
+usage(){
+    echo "Usage: $PROGRAM [OPTION]... SOURCE DEST"
+    echo "  or:  $PROGRAM [OPTION]... SOURCE... DIRECTORY"
+    echo "Rename SOURCE to DEST, or move SOURCE to DIRECTORY."
+    exit 0
+}
+
+
+PROGRAM=${0##*/}
+
+if (( $# == 0 )); then
+    fatal_info 'missing file operand'
+elif (( $# == 1 )) && [[ $1 =~ ^(-h|--help)$ ]]; then
+    usage
+elif (( $# == 1 )); then
+    fatal_info "missing destination file operand after ‘$1’"
+elif (( $# == 2 )) && ! is_virtualenv "$1"; then
+    fatal_info "‘$1’ is not a virtualenv"
+elif (( $# >= 3 )); then
+    fatal_info "extra operand ‘$3’"
+fi
+
+do_mv "$@"
