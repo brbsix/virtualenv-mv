@@ -81,8 +81,8 @@ restore_backup(){
 
 
 usage(){
-    echo "Usage: $PROGRAM [OPTION]... SOURCE DEST"
-    echo "  or:  $PROGRAM [OPTION]... SOURCE... DIRECTORY"
+    echo "Usage: $PROGRAM SOURCE DEST"
+    echo "  or:  $PROGRAM SOURCE DIRECTORY"
     echo "Rename SOURCE to DEST, or move SOURCE to DIRECTORY."
     exit 0
 }
