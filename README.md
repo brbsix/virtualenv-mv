@@ -4,9 +4,11 @@ This is a quick and dirty tool used to move (rename) directories created by virt
 
 Right now, the script just replaces the current path with the destination path in all of the important files. This includes the contents of the activate scripts (e.g. `bin/activate`, `bin/activate.csh`, `bin/activate.fish`), the shebang on scripts (e.g. `bin/easy_install`, `bin/easy_install-3.4`, `bin/pip`, `bin/pip3`, `bin/pip3.4`, `bin/wheel`) and the records within `RECORD` files (e.g. `lib/python3.4/site-packages/wheel-0.24.0.dist-info/RECORD`, `lib/python3.4/site-packages/setuptools-18.2.dist-info/RECORD`, `lib/python3.4/site-packages/pip-7.1.2.dist-info/RECORD`).
 
+It does not update the SHA256 hashes stored in RECORD for files that have had their shebangs modified. These hashes are only verified during installation. So far as I can tell, they serve no further purpose. See [PEP-0427](https://www.python.org/dev/peps/pep-0427/#the-dist-info-directory).
+
 It also has some basic error handling (will create a backup at the start and restore it in the event of a problem).
 
-A few things on the wish list: submit the package to PyPi, the ability to repair virtualenvs that have already been moved incorrectly, more discriminating search/replace, and the ability to update the SHA256 hashes stored in `RECORD` (for files that have had their shebang modified). I don't think the hashes serve any practical purpose once a virtualenv has been initialized, but it may be worth looking into.
+A few things on the wish list: submit the package to PyPi for easy installation via `pip`, the ability to repair virtualenvs that have already been moved incorrectly, more discriminating search/replace.
 
 Installation
 ------------
