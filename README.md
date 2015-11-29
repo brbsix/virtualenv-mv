@@ -6,7 +6,7 @@ Right now, the script just replaces the current path with the destination path i
 
 It also has some basic error handling (will create a backup at the start and restore it in the event of a problem).
 
-A few things on the wish list: the ability to repair virtualenvs that have already been moved incorrectly, more discriminating search/replace, and the ability to update the SHA256 hashes stored in `RECORD` (for files that have had their shebang modified). I don't think the hashes serve any practical purpose once a virtualenv has been initialized, but it may be worth looking into.
+A few things on the wish list: submit the package to PyPi, the ability to repair virtualenvs that have already been moved incorrectly, more discriminating search/replace, and the ability to update the SHA256 hashes stored in `RECORD` (for files that have had their shebang modified). I don't think the hashes serve any practical purpose once a virtualenv has been initialized, but it may be worth looking into.
 
 Installation
 ------------
