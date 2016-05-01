@@ -4,7 +4,7 @@
 
 
 create_backup(){
-    BACKUP_PATH=$SOURCE_PATH.$(tr -dc 0-9 < /dev/urandom | head -c6)
+    BACKUP_PATH=$(mktemp -u "$SOURCE_PATH.XXXXXX")
     cp -a "$SOURCE_PATH" "$BACKUP_PATH"
 }
 
