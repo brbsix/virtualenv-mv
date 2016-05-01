@@ -36,7 +36,7 @@ do_mv(){
 
         # find and replace old virtualenv path with new
         rgrep --files-with-matches --null "$SOURCE_PATH" "${filelist[@]}" \
-            | xargs -0I% -- sed -i "s:$SOURCE_PATH:$PWD:g" %
+            | xargs -0r -- sed -i "s:$SOURCE_PATH:$PWD:g"
     )
 
     remove_backup
