@@ -10,7 +10,7 @@ create_backup(){
 
 
 do_mv(){
-    (
+    local BACKUP_PATH DEST_PATH SOURCE_PATH
 
     DEST_PATH=$(realpath "$2")
     SOURCE_PATH=$(realpath "$1")
@@ -40,8 +40,6 @@ do_mv(){
     )
 
     remove_backup
-
-    )
 }
 
 
