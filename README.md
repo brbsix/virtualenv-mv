@@ -13,11 +13,11 @@ A few things on the wish list: submit the package to PyPi for easy installation 
 Installation
 ------------
 
-To install `virtualenv-mv` locally (assuming directory is on your PATH):
+To install `virtualenv-mv` for the current user (assuming directory is on your PATH):
 
     install virtualenv-mv ~/.local/bin
 
-To install `virtualenv-mv` to the computer:
+To install `virtualenv-mv` for all users:
 
     sudo install virtualenv-mv /usr/local/bin
 
