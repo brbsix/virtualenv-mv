@@ -98,7 +98,7 @@ if (( $# == 0 )); then
 elif (( $# == 1 )) && [[ $1 =~ ^(-h|--help)$ ]]; then
     usage
 elif (( $# == 1 )); then
-    fatal_info "missing destination file operand after ‘$1’"
+    fatal_info "missing destination operand after ‘$1’"
 elif (( $# == 2 )) && ! is_virtualenv "$1"; then
     fatal_info "‘$1’ is not a virtualenv"
 elif (( $# >= 3 )); then
