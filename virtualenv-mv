@@ -28,14 +28,14 @@ do_mv(){
         fatal "failed to move ‘$SOURCE_PATH’ to ‘$DEST_PATH’"
     }
 
-    cd "$DEST_PATH" || {
-        fatal "unable to cd into ‘$DEST_PATH’"
-    }
-
     # find and replace old virtualenv path with new
-    (find bin/ -type f -print0; find lib/ -type f -name RECORD -print0) \
-        | xargs -0r -- rgrep --files-with-matches --null "$SOURCE_PATH" \
-        | xargs -0r -- sed -i "s:$SOURCE_PATH:$PWD:g"
+    (
+        cd "$DEST_PATH" && {
+            find bin/ -type f -print0
+            find lib/ -type f -name RECORD -print0
+        } | xargs -0r -- rgrep --files-with-matches --null "$SOURCE_PATH" \
+          | xargs -0r -- sed -i "s:$SOURCE_PATH:$PWD:g"
+    )
 
     # fix any dangling symlinks
     while read -rd $'\0' path; do
