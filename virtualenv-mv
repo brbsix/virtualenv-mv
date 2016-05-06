@@ -29,13 +29,11 @@ do_mv(){
     }
 
     # find and replace old virtualenv path with new
-    (
-        cd "$DEST_PATH" && {
-            find bin/ -type f -print0
-            find lib/ -type f -name RECORD -print0
-        } | xargs -0r -- rgrep --files-with-matches --null "$SOURCE_PATH" \
-          | xargs -0r -- sed -i "s:$SOURCE_PATH:$PWD:g"
-    )
+    {
+        find "$DEST_PATH/bin" -type f -print0
+        find "$DEST_PATH/lib" -type f -name RECORD -print0
+    } | xargs -0r -- rgrep --files-with-matches --null "$SOURCE_PATH" \
+      | xargs -0r -- sed -i "s:$SOURCE_PATH:$DEST_PATH:g"
 
     # detect whether virtual environment is a venv
     # venv activation scripts require extra work
