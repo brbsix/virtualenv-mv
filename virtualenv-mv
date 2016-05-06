@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Move (rename) Python virtualenv directories
+# Move (rename) Python virtualenvs
 
 
 create_backup(){
