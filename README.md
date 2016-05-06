@@ -8,7 +8,7 @@ It does not update the SHA256 hashes stored in RECORD for files that have had th
 
 It also has some basic error handling (will create a backup at the start and restore it in the event of a problem).
 
-A few things on the wish list: submit the package to PyPi for easy installation via `pip`, the ability to repair virtualenvs that have already been moved incorrectly, more discriminating search/replace.
+A few things on the wish list: submit the package to PyPi for easy installation via `pip` and consider the ability to repair virtualenvs that have already been moved incorrectly.
 
 Installation
 ------------
