@@ -37,6 +37,15 @@ do_mv(){
           | xargs -0r -- sed -i "s:$SOURCE_PATH:$PWD:g"
     )
 
+    # detect whether virtual environment is a venv
+    # venv activation scripts require extra work
+    if [[ -f $DEST_PATH/pyvenv.cfg ]]; then
+        VENV_NAME=$(basename "$DEST_PATH")
+        sed -i "s:if \[ \"x(\S\+) \" != x \] ; then$:if [ \"x(${VENV_NAME}) \" != x ] ; then:;s:PS1=\"(\S\+) \$PS1\"$:PS1=\"(${VENV_NAME}) \$PS1\":" "$DEST_PATH/bin/activate"
+        sed -i "s:if (\"\S\+\" != \"\") then$:if (\"${VENV_NAME}\" != \"\") then:;s:set env_name = \"\S\+\"$:set env_name = \"${VENV_NAME}\":" "$DEST_PATH/bin/activate.csh"
+        sed -i "s:if test -n \"(\S\+) \"$:if test -n \"(${VENV_NAME}) \":;s:printf \"%s%s%s\" \"(\S\+) \" (set_color normal) (_old_fish_prompt)$:printf \"%s%s%s\" \"(${VENV_NAME}) \" (set_color normal) (_old_fish_prompt):" "$DEST_PATH/bin/activate.fish"
+    fi
+
     # fix any dangling symlinks
     while read -rd $'\0' path; do
         ln -fs "${path/local\/}" "$path"
