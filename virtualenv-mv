@@ -19,6 +19,9 @@ do_mv(){
 
     # move directory
     DEST_PATH=$(mv -v "$SOURCE_PATH" "$DEST_PATH" | awk -F[‘’] '{print $(NF-1)}')
+    [[ $? -eq 0 && -n $DEST_PATH ]] || {
+        fatal "encountered an error while moving ‘$SOURCE_PATH’"
+    }
 
     # ensure move was successful
     is_virtualenv "$DEST_PATH" || {
