@@ -4,8 +4,8 @@
 
 
 create_backup(){
-    BACKUP_PATH=$(mktemp -u -- "$SOURCE_PATH.XXXXXX")
-    cp -a -- "$SOURCE_PATH" "$BACKUP_PATH"
+    BACKUP_PATH=$(mktemp --dry-run -- "$SOURCE_PATH.XXXXXX")
+    cp --archive -- "$SOURCE_PATH" "$BACKUP_PATH"
 }
 
 
@@ -18,7 +18,7 @@ do_mv(){
     create_backup
 
     # move directory
-    DEST_PATH=$(mv -v -- "$SOURCE_PATH" "$DEST_PATH" | awk -F[‘’] '{print $(NF-1)}')
+    DEST_PATH=$(mv --verbose -- "$SOURCE_PATH" "$DEST_PATH" | awk -F '[‘’]' '{print $(NF-1)}')
     [[ $? -eq 0 && -n $DEST_PATH ]] || {
         fatal "encountered an error while moving ‘$SOURCE_PATH’"
     }
@@ -32,8 +32,8 @@ do_mv(){
     {
         find "$DEST_PATH/bin" -type f -print0
         find "$DEST_PATH/lib" -type f -name RECORD -print0
-    } | xargs -0r -- rgrep --files-with-matches --null "$SOURCE_PATH" \
-      | xargs -0r -- sed -i "s:$SOURCE_PATH:$DEST_PATH:g"
+    } | xargs --null --no-run-if-empty -- rgrep --files-with-matches --null "$SOURCE_PATH" \
+      | xargs --null --no-run-if-empty -- sed -i "s:$SOURCE_PATH:$DEST_PATH:g"
 
     # detect whether virtual environment is a venv
     # venv activation scripts require extra work
@@ -46,7 +46,7 @@ do_mv(){
 
     # fix any dangling symlinks
     while read -rd $'\0' path; do
-        ln -fs -- "${path/local\/}" "$path"
+        ln --force --symbolic -- "${path/local\/}" "$path"
     done < <(find "$DEST_PATH/local" -type l -print0 2>/dev/null)
 
     remove_backup
