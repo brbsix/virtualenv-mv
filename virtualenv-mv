@@ -96,6 +96,9 @@ usage(){
 }
 
 
+# enable strict mode
+set -euo pipefail
+
 PROGRAM=${0##*/}
 
 if (( $# == 0 )); then
