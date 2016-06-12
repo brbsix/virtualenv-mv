@@ -15,6 +15,10 @@ Installation
 
 To install `virtualenv-mv` for the current user (assuming directory is on your PATH):
 
+    install <(curl -sS https://raw.githubusercontent.com/brbsix/virtualenv-mv/master/virtualenv-mv) ~/.local/bin/virtualenv-mv
+
+Or, if you're in the cloned repository:
+
     install virtualenv-mv ~/.local/bin
 
 To install `virtualenv-mv` for all users:
