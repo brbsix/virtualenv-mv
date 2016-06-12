@@ -39,6 +39,6 @@ Note that this tool cannot currently help if you've already moved the directory 
 License
 -------
 
-Copyright (c) 2015 Six <brbsix@gmail.com>
+Copyright (c) 2015-2016 Six <brbsix@gmail.com>
 
 Licensed under the GPLv3 license.
