@@ -6,7 +6,7 @@ Right now, the script just replaces the current path with the destination path i
 
 It does not update the SHA256 hashes stored in RECORD for files that have had their shebangs modified. These hashes are only verified during installation. So far as I can tell, they serve no further purpose. See [PEP-0427](https://www.python.org/dev/peps/pep-0427/#the-dist-info-directory).
 
-It also has some basic error handling and will leave an untouched backup of the virtualenv in the event on an error.
+It also has some basic error handling and will attempt to restore a backup of the virtualenv in the event of an error.
 
 A few things on the wish list: submit the package to PyPi for easy installation via `pip` and consider the ability to repair virtualenvs that have already been moved incorrectly.
 
