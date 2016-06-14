@@ -2,7 +2,7 @@
 
 This is a quick and dirty tool used to move (rename) directories created by virtualenv and/or venv.
 
-The script replaces the current path with the destination path in all of the important files. This includes the contents of the activate scripts (e.g. `bin/activate`, `bin/activate.csh`, `bin/activate.fish`), the shebang on scripts (e.g. `bin/easy_install`, `bin/easy_install-3.4`, `bin/pip`, `bin/pip3`, `bin/pip3.4`, `bin/wheel`) and the records within `RECORD` files (e.g. `lib/python3.4/site-packages/wheel-0.24.0.dist-info/RECORD`, `lib/python3.4/site-packages/setuptools-18.2.dist-info/RECORD`, `lib/python3.4/site-packages/pip-7.1.2.dist-info/RECORD`). It also relinks dangling symlinks (where appropriate).
+The script replaces the current path with the destination path in all of the important files. This includes the contents of the activate scripts (e.g. `bin/activate`, `bin/activate.csh`, `bin/activate.fish`), the shebang on scripts (e.g. `bin/easy_install`, `bin/easy_install-3.4`, `bin/pip`, `bin/pip3`, `bin/pip3.4`, `bin/wheel`) and the records within `RECORD` files (e.g. `lib/python3.4/site-packages/wheel-0.24.0.dist-info/RECORD`, `lib/python3.4/site-packages/setuptools-18.2.dist-info/RECORD`, `lib/python3.4/site-packages/pip-7.1.2.dist-info/RECORD`). It also fixes absolute paths in .pth files and relinks dangling symlinks (where appropriate).
 
 It does not update the SHA256 hashes stored in RECORD for files that have had their shebangs modified. These hashes are only verified during installation. So far as I can tell, they serve no further purpose. See [PEP-0427](https://www.python.org/dev/peps/pep-0427/#the-dist-info-directory).
 
