@@ -47,7 +47,7 @@ do_mv(){
         fi
 
         if [[ -e $DEST_PATH/bin/activate.fish ]]; then
-            sed -i "s:if test -n \"(\S\+) \"$:if test -n \"(${VENV_NAME}) \":;s:printf \"%s%s%s\" \"(\S\+) \" (set_color normal) (_old_fish_prompt)$:printf \"%s%s%s\" \"(${VENV_NAME}) \" (set_color normal) (_old_fish_prompt):" -- "$DEST_PATH/bin/activate.fish"
+            sed -i "s:if test -n \"\(\\$\?\)(\S\+) \"$:if test -n \"\1(${VENV_NAME}) \":;s:printf \"%s%s%s\" \"\(\\$\?\)(\S\+) \" (set_color normal) (_old_fish_prompt)$:printf \"%s%s%s\" \"\1(${VENV_NAME}) \" (set_color normal) (_old_fish_prompt):" -- "$DEST_PATH/bin/activate.fish"
         fi
     fi
 
