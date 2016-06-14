@@ -51,6 +51,9 @@ do_mv(){
         fi
     fi
 
+    # fix absolute paths in .pth files (if any)
+    find "$DEST_PATH" -type f -path '*/site-packages/*' -name '*.pth' -exec sed -i "s:^$SOURCE_PATH/:$DEST_PATH/:" -- {} +
+
     # fix any dangling symlinks
     while read -rd $'\0' path; do
         ln --force --symbolic -- "${path/local\/}" "$path"
