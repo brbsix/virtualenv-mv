@@ -31,7 +31,7 @@ do_mv(){
     {
         find "$DEST_PATH/bin" -type f -print0
         find "$DEST_PATH/lib" -type f -name RECORD -print0
-    } | xargs --null --no-run-if-empty -- rgrep --files-with-matches --null "$SOURCE_PATH" -- \
+    } | xargs --null --no-run-if-empty -- grep --recursive --files-with-matches --null "$SOURCE_PATH" -- \
       | xargs --null --no-run-if-empty -- sed -i "s:$SOURCE_PATH:$DEST_PATH:g" --
 
     # detect whether virtual environment is a venv
