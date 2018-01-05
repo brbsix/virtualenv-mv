@@ -18,7 +18,7 @@ do_mv(){
     create_backup
 
     # move directory
-    DEST_PATH=$(mv --verbose -- "$SOURCE_PATH" "$DEST_PATH" | awk -F '[‘’]' '{print $(NF-1)}') || {
+    DEST_PATH=$(mv --verbose -- "$SOURCE_PATH" "$DEST_PATH" | awk -F '[‘’'"'"']' '{print $(NF-1)}') || {
         fatal "encountered an error while moving ‘$SOURCE_PATH’"
     }
 
